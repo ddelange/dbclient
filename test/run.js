@@ -6,7 +6,8 @@ var tests = [
   require('./index'),
   require('./stream'),
   require('./configValidation'),
-  require('./Batch')
+  require('./Batch'),
+  require('./fileSink')
   // other tests go here
 ];
 
