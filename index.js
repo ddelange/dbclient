@@ -1,5 +1,16 @@
+const config = require('./src/config');
+
 if (process.env.NODE_ENV !== 'test') {
-  require('./src/configValidation').validate(require('pelias-config').generate());
+  const outputDirectory = config.get('outputDirectory');
+  if (!outputDirectory) {
+    require('./src/configValidation').validate(require('pelias-config').generate());
+  }
 }
 
-module.exports = require('./src/sink');
+module.exports = function(opts) {
+  const outputDirectory = config.get('outputDirectory');
+  if (outputDirectory) {
+    return require('./src/fileSink')(outputDirectory, opts);
+  }
+  return require('./src/sink')(opts);
+};
